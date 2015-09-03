@@ -1,0 +1,25 @@
+{
+  "name": "seuss",
+  "version": "0.0.1",
+  "description": "Persistent in process queue for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/odojs/seuss.git"
+  },
+  "keywords": [
+    "queue"
+  ],
+  "author": "Thomas Coats <thomas.coats@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/odojs/seuss/issues"
+  },
+  "homepage": "https://github.com/odojs/seuss#readme",
+  "dependencies": {
+    "graceful-fs": "4.1.2"
+  }
+}
