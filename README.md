@@ -58,3 +58,25 @@ var queue = seuss.create('./test.queue');
 array.forEach(queue.enqueue);
 queue.close();
 ```
+
+# Command line tool
+
+```console
+Usage: seuss command [parameter] file
+
+View:
+  cat                     Print entire queue contents
+  peek n..m               Print rows n..m inclusive
+
+Manipulate:
+  rm n..m                 Remove and print rows n..m inclusive
+  insert index message    Insert a message into the queue
+  enqueue message         Add message to the queue
+  dequeue                 Remove and print a message from the queue
+  purge                   Remove all messages from the queue
+
+Options:
+  -h                      Display this usage information
+  -v                      Display the version number
+
+```

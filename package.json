@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Persistent in process queue for Node.js",
   "main": "index.js",
+  "bin": {
+    "seuss": "bin/seuss"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
