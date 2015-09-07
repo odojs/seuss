@@ -19,8 +19,9 @@ Options:
 """
 
 process.on 'uncaughtException', (err) ->
-  console.error '  Caught exception: '
+  console.error 'Caught exception: '
   console.error err.stack
+  process.exit 1
 
 # General purpose printing an error and usage
 usage_error = (message) =>
@@ -35,6 +36,7 @@ args = process.argv[2..]
 return console.error usage if args.length is 0
 
 seuss = require '../'
+{ SeussQueueBusy } = require '../src/errors'
 
 commands =
   peek: (r, path) ->
@@ -172,5 +174,14 @@ cmds =
 
 command = args[0]
 args.shift()
-return cmds[command]() if cmds[command]?
+try
+  return cmds[command]() if cmds[command]?
+catch e
+  if e instanceof SeussQueueBusy
+    console.error e.message
+    console.error()
+  else
+    console.error 'Caught exception: '
+    console.error err.stack
+  process.exit 1
 usage_error "#{command} is not a known seuss command"

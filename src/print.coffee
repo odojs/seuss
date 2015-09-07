@@ -1,6 +1,7 @@
 fs = require 'graceful-fs'
 markers = require './markers'
 roundbyte = require './roundbyte'
+{ SeussQueueCorrupt } = require './errors'
 
 module.exports = (path) ->
   buffer = fs.readFileSync path
@@ -19,5 +20,5 @@ module.exports = (path) ->
     else if marker is markers.dequeue
       console.log 'dequeue'
     else
-      throw 'Corrupt queue file - fix or remove'
+      throw new SeussQueueCorrupt()
   console.log 'noop'

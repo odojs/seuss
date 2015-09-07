@@ -5,12 +5,18 @@ fs = require 'graceful-fs'
 Queue = require './memoryqueue'
 markers = require './markers'
 roundbyte = require './roundbyte'
+{ SeussQueueBusy } = require './errors'
 
 # default buffer size 128k
 DEFAULT_BUFFER_SIZE = 1024 * 128
 
 seuss =
+  assert: (path) ->
+    if fs.existsSync "#{path}.lock"
+      throw new SeussQueueBusy()
   create: (path, buffersize) ->
+    seuss.assert path
+    fs.writeFileSync "#{path}.lock", ''
     # default buffer size
     buffersize = DEFAULT_BUFFER_SIZE if !buffersize?
     noopbuffer = new Buffer buffersize
@@ -57,6 +63,7 @@ seuss =
           fsqueue.enqueue message
         fs.renameSync "#{path}.new", path
       close: ->
+        fs.unlinkSync "#{path}.lock"
         fs.closeSync fd
 
     enqueue: (message) ->
@@ -78,6 +85,8 @@ seuss =
       fsqueue.close()
 
   open: (path) ->
+    seuss.assert path
+    fs.writeFileSync "#{path}.lock", ''
     queue = seuss.create "#{path}.new"
     if fs.existsSync path
       messages = seuss.read path

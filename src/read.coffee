@@ -1,6 +1,7 @@
 fs = require 'graceful-fs'
 markers = require './markers'
 roundbyte = require './roundbyte'
+{ SeussQueueCorrupt } = require './errors'
 
 module.exports = (path) ->
   dequeues = 0
@@ -21,7 +22,7 @@ module.exports = (path) ->
     else if marker is markers.dequeue
       dequeues++
     else
-      throw 'Corrupt queue file - fix or remove'
+      throw new SeussQueueCorrupt()
   reverse = []
   for i in [0...result.length]
     reverse.push result.pop()
