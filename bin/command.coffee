@@ -11,6 +11,7 @@ Manipulate:
   enqueue message         Add message to the queue
   dequeue                 Remove and print a message from the queue
   purge                   Remove all messages from the queue
+  compact                 Remove expired queue contents
 
 Options:
   -h                      Display this usage information
@@ -83,6 +84,11 @@ commands =
 
   purge: (path) ->
     queue = seuss.create path
+    queue.close()
+
+  compact: (path) ->
+    queue = seuss.open path
+    queue.compact()
     queue.close()
 
   insert: (index, message, path) ->
@@ -165,6 +171,10 @@ cmds =
     return commands.purge args[0] if args.length is 1
     usage_error 'seuss purge requires one argument - the queue path'
 
+  compact: ->
+    return commands.compact args[0] if args.length is 1
+    usage_error 'seuss compact requires one argument - the queue path'
+
   '-h': ->
     console.log usage
 
@@ -176,9 +186,9 @@ command = args[0]
 args.shift()
 try
   return cmds[command]() if cmds[command]?
-catch e
-  if e instanceof SeussQueueBusy
-    console.error e.message
+catch err
+  if err instanceof SeussQueueBusy
+    console.error err.message
     console.error()
   else
     console.error 'Caught exception: '
