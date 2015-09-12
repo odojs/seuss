@@ -81,6 +81,9 @@ seuss = {
         }
         return fs.renameSync(path + ".new", path);
       },
+      rename: function(newpath) {
+        return path = newpath;
+      },
       close: function() {
         fs.unlinkSync(path + ".lock");
         return fs.closeSync(fd);
@@ -108,6 +111,9 @@ seuss = {
         fsqueue.compact();
         return memqueue.compact();
       },
+      rename: function(newpath) {
+        return fsqueue.rename(newpath);
+      },
       close: function() {
         return fsqueue.close();
       }
@@ -126,6 +132,8 @@ seuss = {
       }
     }
     fs.renameSync(path + ".new", path);
+    fs.unlink(path + ".new.lock");
+    queue.rename(path);
     return queue;
   },
   print: require('./print'),

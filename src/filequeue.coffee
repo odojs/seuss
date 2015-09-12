@@ -62,6 +62,8 @@ seuss =
         for message in memqueue.all()
           fsqueue.enqueue message
         fs.renameSync "#{path}.new", path
+      rename: (newpath) ->
+        path = newpath
       close: ->
         fs.unlinkSync "#{path}.lock"
         fs.closeSync fd
@@ -81,6 +83,8 @@ seuss =
     compact: ->
       fsqueue.compact()
       memqueue.compact()
+    rename: (newpath) ->
+      fsqueue.rename newpath
     close: ->
       fsqueue.close()
 
@@ -93,6 +97,8 @@ seuss =
       for message in messages
         queue.enqueue message
     fs.renameSync "#{path}.new", path
+    fs.unlink "#{path}.new.lock"
+    queue.rename path
     queue
 
   print: require './print'
