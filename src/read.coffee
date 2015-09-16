@@ -18,7 +18,7 @@ module.exports = (path) ->
       message = buffer.toString 'utf8', offset, offset + length
       offset += length
       offset = roundbyte offset
-      result.push message
+      result.push JSON.parse message
     else if marker is markers.dequeue
       dequeues++
     else

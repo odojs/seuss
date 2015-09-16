@@ -27,7 +27,7 @@ module.exports = function(path) {
       message = buffer.toString('utf8', offset, offset + length);
       offset += length;
       offset = roundbyte(offset);
-      result.push(message);
+      result.push(JSON.parse(message));
     } else if (marker === markers.dequeue) {
       dequeues++;
     } else {

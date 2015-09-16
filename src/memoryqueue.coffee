@@ -2,7 +2,7 @@
 # Auto compacts if reduced by half
 # Adapted from http://code.stephenmorley.org/javascript/queues/
 
-Queue = (queue) ->
+module.exports = (queue) ->
   queue = [] if !queue?
   offset = 0
 
@@ -29,5 +29,3 @@ Queue = (queue) ->
     compact()
     queue
   compact: compact
-
-module.exports = Queue

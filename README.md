@@ -12,12 +12,15 @@ On disk persistence
 In memory queue
 - Auto compacts after reducing by half
 
+
+# Usage
+
 ```js
 var seuss = require('seuss');
 
 // Open a queue
 // Automatically compacts the queue
-var queue = seuss.open('./test.queue');
+var queue = seuss.open('./test.seuss');
 // Look at the first element
 // Returns undefined if not available
 console.log(queue.peak());
@@ -26,7 +29,7 @@ queue.enqueue('text');
 queue.enqueue(JSON.stringify({ id: 1, message: 'text' }));
 console.log(queue.dequeue());
 console.log(queue.dequeue());
-// Optional manual compact catt (queues shouldn't take up too much space)
+// Optional manual compact call (queues shouldn't take up too much space)
 // Best practice is to compact after x messages, or on a scheudule
 queue.compact();
 // Close is only needed on shutdown
@@ -34,7 +37,7 @@ queue.close();
 
 // Print the contents of the queue, e.g. enqueues and dequeues
 // Mostly for debugging
-seuss.print('./test.queue');
+seuss.print('./test.seuss');
 // Will output something like:
 // enqueue first
 // enqueue second
@@ -47,14 +50,14 @@ seuss.print('./test.queue');
 // noop
 
 // Read in a queue contents
-var array = seuss.read('./test.queue');
+var array = seuss.read('./test.seuss');
 console.log(array);
 // Will output:
 // ['third', 'fourth', 'fifth', 'sixth']
 
 // Write out a new queue
 var array = ['one', 'two', 'three'];
-var queue = seuss.create('./test.queue');
+var queue = seuss.create('./test.seuss');
 array.forEach(queue.enqueue);
 queue.close();
 ```
@@ -74,6 +77,7 @@ Manipulate:
   enqueue message         Add message to the queue
   dequeue                 Remove and print a message from the queue
   purge                   Remove all messages from the queue
+  compact                 Remove expired queue contents
 
 Options:
   -h                      Display this usage information

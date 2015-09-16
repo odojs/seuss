@@ -37,6 +37,7 @@ seuss = {
     fsqueue = {
       enqueue: function(message) {
         var allocatesize, buffer, length, size;
+        message = JSON.stringify(message);
         length = Buffer.byteLength(message);
         size = roundbyte(length + 8);
         allocatesize = size;
