@@ -3,7 +3,7 @@ var DEFAULT_BUFFER_SIZE, Queue, SeussQueueBusy, fs, markers, roundbyte, seuss;
 
 fs = require('graceful-fs');
 
-Queue = require('./memoryqueue');
+Queue = require('seuss-queue');
 
 markers = require('./markers');
 

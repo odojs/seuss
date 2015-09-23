@@ -2,7 +2,7 @@
 
 # Incremental backoff on EMFILE
 fs = require 'graceful-fs'
-Queue = require './memoryqueue'
+Queue = require 'seuss-queue'
 markers = require './markers'
 roundbyte = require './roundbyte'
 { SeussQueueBusy } = require './errors'
