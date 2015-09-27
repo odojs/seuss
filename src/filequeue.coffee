@@ -15,6 +15,7 @@ seuss =
     if fs.existsSync "#{path}.lock"
       throw new SeussQueueBusy()
   create: (path, buffersize) ->
+    _isclosed = no
     seuss.assert path
     fs.writeFileSync "#{path}.lock", ''
     # default buffer size
@@ -87,6 +88,8 @@ seuss =
     rename: (newpath) ->
       fsqueue.rename newpath
     close: ->
+      return if _isclosed
+      _isclosed = yes
       fsqueue.close()
 
   open: (path) ->

@@ -20,7 +20,8 @@ seuss = {
     }
   },
   create: function(path, buffersize) {
-    var allocated, fd, fsqueue, memqueue, noopbuffer, offset;
+    var _isclosed, allocated, fd, fsqueue, memqueue, noopbuffer, offset;
+    _isclosed = false;
     seuss.assert(path);
     fs.writeFileSync(path + ".lock", '');
     if (buffersize == null) {
@@ -116,6 +117,10 @@ seuss = {
         return fsqueue.rename(newpath);
       },
       close: function() {
+        if (_isclosed) {
+          return;
+        }
+        _isclosed = true;
         return fsqueue.close();
       }
     };
