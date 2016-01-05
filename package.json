@@ -1,6 +1,6 @@
 {
   "name": "seuss",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Persistent in process queue for Node.js",
   "main": "index.js",
   "bin": {
